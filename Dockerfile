@@ -23,6 +23,7 @@ ADD conf /app/conf
 ADD Caddyfile SecureCaddyfile /usr/local/caddy/
 
 RUN adduser -D -u 1000 miracle \
+  && /bin/cp /usr/share/zoneinfo/Asia/Shanghai /etc/localtime && echo 'Asia/Shanghai' >/etc/timezone \
   && apk update \
   && apk add runit shadow wget bash curl openrc gnupg aria2 tar mailcap --no-cache \
   && caddy_tag=2.2.1 \
