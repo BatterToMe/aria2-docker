@@ -9,7 +9,11 @@ redir /rclone /rclone/ 301
 
 route /rclone/* {
   uri strip_prefix /rclone
-  reverse_proxy http://localhost:5572
+  reverse_proxy http://localhost:5572 {
+        header_up Host {http.reverse_proxy.upstream.hostport}
+        header_down Access-Control-Allow-Headers *
+        header_down Access-Control-Allow-Origin *
+  }
 }
 
 route /ui/* {
@@ -18,8 +22,16 @@ route /ui/* {
   file_server
 }
 
-reverse_proxy 127.0.0.1:8080
-reverse_proxy /jsonrpc 127.0.0.1:6800
+reverse_proxy 127.0.0.1:8080 {
+        header_up Host {http.reverse_proxy.upstream.hostport}
+        header_down Access-Control-Allow-Headers *
+        header_down Access-Control-Allow-Origin *
+}
+reverse_proxy /jsonrpc 127.0.0.1:6800 {
+        header_up Host {http.reverse_proxy.upstream.hostport}
+        header_down Access-Control-Allow-Headers *
+        header_down Access-Control-Allow-Origin *
+}
 
 encode gzip
 log {
