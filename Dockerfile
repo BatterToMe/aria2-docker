@@ -46,7 +46,7 @@ RUN adduser -D -u 1000 miracle \
   && unzip rclone-*.zip \
   && cd rclone-*-linux-amd64 \
   && cp rclone /usr/local/bin/ \
-  && chown junv:junv /usr/local/bin/rclone \
+  && chown miracle:miracle /usr/local/bin/rclone \
   && chmod 755 /usr/local/bin/rclone \
   && rm /app/rclone-*.zip \
   && rm -rf /app/rclone-* \
