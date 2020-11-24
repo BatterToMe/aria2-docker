@@ -1,6 +1,6 @@
 FROM alpine:latest
 
-LABEL AUTHOR=Junv<wahyd4@gmail.com>
+LABEL AUTHOR=Miracle
 
 WORKDIR /app
 
@@ -22,7 +22,7 @@ ADD aria2c.sh caddy.sh Procfile init.sh start.sh rclone.sh /app/
 ADD conf /app/conf
 ADD Caddyfile SecureCaddyfile /usr/local/caddy/
 
-RUN adduser -D -u 1000 junv \
+RUN adduser -D -u 1000 miracle \
   && apk update \
   && apk add runit shadow wget bash curl openrc gnupg aria2 tar mailcap --no-cache \
   && caddy_tag=2.2.1 \
