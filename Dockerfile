@@ -17,15 +17,18 @@ ENV CADDYPATH=/app
 ENV RCLONE_CONFIG=/app/conf/rclone.conf
 ENV XDG_DATA_HOME=/app/.caddy/data
 ENV XDG_CONFIG_HOME=/app/.caddy/config
+ENV TZ=Asia/Shanghai
 
 ADD aria2c.sh caddy.sh Procfile init.sh start.sh rclone.sh /app/
 ADD conf /app/conf
 ADD Caddyfile SecureCaddyfile /usr/local/caddy/
 
 RUN adduser -D -u 1000 miracle \
-  && echo 'Asia/Shanghai' >/etc/timezone \
   && apk update \
-  && apk add runit shadow wget bash curl openrc gnupg aria2 tar mailcap --no-cache \
+  && apk add runit shadow wget bash curl openrc gnupg aria2 tar mailcap tzdata --no-cache \
+  && echo "${TZ}" > /etc/timezone \
+  && ln -sf /usr/share/zoneinfo/${TZ} /etc/localtime \
+  && rm /var/cache/apk/* \
   && caddy_tag=2.2.1 \
   && wget -N https://github.com/caddyserver/caddy/releases/download/v${caddy_tag}/caddy_${caddy_tag}_linux_amd64.tar.gz \
   && tar -zxvf caddy_${caddy_tag}_linux_amd64.tar.gz \
